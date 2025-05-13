@@ -5,6 +5,7 @@ from dnslib.server import DNSServer, BaseResolver
 from dnslib.dns import RR, QTYPE, A, AAAA
 from ipaddress import ip_address
 
+
 class PeerResolver(BaseResolver):
     def __init__(self, api_url):
         self.api_url = api_url
@@ -62,8 +63,10 @@ class PeerResolver(BaseResolver):
 
         return reply
 
+
 # Run DNS server
 if __name__ == "__main__":
+
     resolver = PeerResolver("https://api.adventurecoin.quest/peers")
     server = DNSServer(resolver, port=53, address="::")  # Dual-stack (IPv4 + IPv6)
     print("AdventureCoin DNS Seeder running on port 53 (IPv4 & IPv6)...")
