@@ -16,3 +16,19 @@ pip install dnslib requests
 ```cpp
 vSeeds.emplace_back("seed.adventurecoin.quest");
 ```
+
+
+# 🧠 Just make sure you also:
+Run the script with root privileges or use sudo, since binding to port 53 (standard DNS port) requires elevated permissions.
+
+Example:
+
+```bash
+sudo python3 api_dns_seeder.py
+```
+Open port 53 (both UDP and TCP) in your firewall:
+
+```bash
+sudo ufw allow 53
+```
+Point your DNS A record to the server's IP (e.g., seed.adventurecoin.quest → your.server.ip).
