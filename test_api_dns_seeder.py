@@ -1,5 +1,5 @@
 import pytest
-import time  # Import the time module
+import time
 from unittest.mock import patch
 from api_dns_seeder import PeerResolver
 from dnslib import DNSRecord, QTYPE
@@ -20,8 +20,12 @@ def test_update_peers():
         # Directly call update_peers() instead of waiting for the thread
         resolver.update_peers()
 
-        # Wait a moment to ensure that the peers are updated (you can adjust the sleep time)
+        # Wait a moment to ensure that the peers are updated
         time.sleep(1)
+
+        # Print to verify that the peers are being updated
+        print(f"IPv4 Peers: {resolver.ipv4_peers}")
+        print(f"IPv6 Peers: {resolver.ipv6_peers}")
 
         # Test if peers are updated
         assert len(resolver.ipv4_peers) == 1
@@ -44,11 +48,9 @@ def test_resolve():
     response_ipv4 = resolver.resolve(request_ipv4, None)
     response_ipv6 = resolver.resolve(request_ipv6, None)
 
-    # Check if answers are returned
-    assert hasattr(response_ipv4, 'answers'), "Expected 'answers' in the response"
-    assert len(response_ipv4.answers) == 1
-    assert response_ipv4.answers[0].rdata == "192.168.1.1"
+    # Check for 'answers' in the response (using dnslib's rdata attribute)
+    assert len(response_ipv4.rr) == 1
+    assert response_ipv4.rr[0].rdata == "192.168.1.1"
 
-    assert hasattr(response_ipv6, 'answers'), "Expected 'answers' in the response"
-    assert len(response_ipv6.answers) == 1
-    assert response_ipv6.answers[0].rdata == "2001:db8::ff00:42:8329"
+    assert len(response_ipv6.rr) == 1
+    assert response_ipv6.rr[0].rdata == "2001:db8::ff00:42:8329"
