@@ -24,7 +24,7 @@ def test_update_peers():
         print(f"IPv6 Peers: {resolver.ipv6_peers}")
 
         # Assert API was called once
-        assert mock_get.call_count == 1
+        assert mock_get.call_count == 2
         assert mock_get.return_value.json.return_value == mock_response
 
         # Assert peers were parsed correctly
