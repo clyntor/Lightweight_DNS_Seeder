@@ -67,6 +67,6 @@ class PeerResolver(BaseResolver):
 if __name__ == "__main__":
 
     resolver = PeerResolver("https://api.adventurecoin.quest/peers")
-    server = DNSServer(resolver, port=53, address="::")  # Dual-stack (IPv4 + IPv6)
-    print("AdventureCoin DNS Seeder running on port 53 (IPv4 & IPv6)...")
+    server = DNSServer(resolver, port=8053, address="::")  # Dual-stack (IPv4 + IPv6)
+    print("AdventureCoin DNS Seeder running on port 8053 (IPv4 & IPv6)...")
     server.start()
