@@ -32,3 +32,12 @@ Open port 53 (both UDP and TCP) in your firewall:
 sudo ufw allow 53
 ```
 Point your DNS A record to the server's IP (e.g., seed.adventurecoin.quest → your.server.ip).
+
+
+## 📸 Screenshots
+
+### 1. Seeder setup script running 
+![Seeder setup](screenshots/ss1.jpg)
+
+### 2. Seeder running via Systemd
+![Seeder running](screenshots/ss2.jpg)
