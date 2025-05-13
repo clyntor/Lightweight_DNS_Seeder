@@ -16,10 +16,10 @@ pip install dnslib requests
 
 ## 🚀 One-Line Auto Installer
 
-Run this to set up everything via `setup.sh`:
+Run this to set up everything via `setup-dns-seeder.sh`:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/CryptoDevelopmentServices/Lightweight_DNS_Seeder/main/setup.sh | sudo bash
+curl -sL https://raw.githubusercontent.com/CryptoDevelopmentServices/Lightweight_DNS_Seeder/main/setup-dns-seeder.sh | sudo bash
 ```
 
 > This script:
