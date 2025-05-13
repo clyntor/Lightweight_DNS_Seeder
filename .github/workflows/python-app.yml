@@ -47,6 +47,6 @@ jobs:
         pytest  # Runs all test files matching test_*.py
 
     # Run the Lightweight DNS Seeder
-    - name: Run Lightweight DNS Seeder
-      run: |
-        python api_dns_seeder.py
+   # - name: Run Lightweight DNS Seeder
+   #   run: |
+    #    python api_dns_seeder.py
