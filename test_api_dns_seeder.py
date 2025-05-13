@@ -1,4 +1,5 @@
 import pytest
+import time  # Import the time module
 from unittest.mock import patch
 from api_dns_seeder import PeerResolver
 
