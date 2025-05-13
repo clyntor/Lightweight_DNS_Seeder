@@ -34,8 +34,8 @@ def test_resolve():
     resolver.ipv6_peers = ["2001:db8::ff00:42:8329"]
 
     # Mock request using dnslib's DNSRecord and QTYPE
-    request_ipv4 = DNSRecord.question("example.com", QTYPE.A)
-    request_ipv6 = DNSRecord.question("example.com", QTYPE.AAAA)
+    request_ipv4 = DNSRecord.question("example.com", "A")  # Use string "A" instead of QTYPE.A
+    request_ipv6 = DNSRecord.question("example.com", "AAAA")  # Use string "AAAA" instead of QTYPE.AAAA
 
     # Mock response
     response_ipv4 = resolver.resolve(request_ipv4, None)
@@ -48,4 +48,3 @@ def test_resolve():
     # Test IPv6 resolution
     assert len(response_ipv6.answers) == 1
     assert response_ipv6.answers[0].rdata == "2001:db8::ff00:42:8329"
-    
