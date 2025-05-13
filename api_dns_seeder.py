@@ -18,29 +18,31 @@ class PeerResolver(BaseResolver):
             threading.Thread(target=self.update_loop, daemon=True).start()
 
     def update_peers(self):
-        try:
-            response = requests.get(self.api_url, timeout=5)
-            if response.status_code == 200:
-                peers = response.json()
-                ipv4_list = []
-                ipv6_list = []
+    try:
+        response = requests.get(self.api_url, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            peers = data.get("result", [])
+            ipv4_list = []
+            ipv6_list = []
 
-                for ip in peers:
-                    try:
-                        ip_obj = ip_address(ip)
-                        if ip_obj.version == 4:
-                            ipv4_list.append(str(ip_obj))
-                        elif ip_obj.version == 6:
-                            ipv6_list.append(str(ip_obj))
-                    except ValueError:
-                        continue
+            for entry in peers:
+                ip = entry.get("addr", "")
+                try:
+                    ip_obj = ip_address(ip)
+                    if ip_obj.version == 4:
+                        ipv4_list.append(str(ip_obj))
+                    elif ip_obj.version == 6:
+                        ipv6_list.append(str(ip_obj))
+                except ValueError:
+                    continue
 
-                with self.lock:
-                    self.ipv4_peers = ipv4_list
-                    self.ipv6_peers = ipv6_list
+            with self.lock:
+                self.ipv4_peers = ipv4_list
+                self.ipv6_peers = ipv6_list
 
-        except Exception as e:
-            print(f"Failed to fetch peers: {e}")
+    except Exception as e:
+        print(f"Failed to fetch peers: {e}")
 
     def update_loop(self):
         while True:
