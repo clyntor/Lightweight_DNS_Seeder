@@ -7,15 +7,15 @@ from ipaddress import ip_address
 
 
 class PeerResolver(BaseResolver):
-    def __init__(self, api_url):
+    def __init__(self, api_url, start_thread=True):
         self.api_url = api_url
         self.ipv4_peers = []
         self.ipv6_peers = []
         self.lock = threading.Lock()
         self.update_peers()
 
-        # Background thread to update peers periodically
-        threading.Thread(target=self.update_loop, daemon=True).start()
+        if start_thread:
+            threading.Thread(target=self.update_loop, daemon=True).start()
 
     def update_peers(self):
         try:
@@ -45,7 +45,7 @@ class PeerResolver(BaseResolver):
     def update_loop(self):
         while True:
             self.update_peers()
-            time.sleep(300)  # Refresh every 5 minutes
+            time.sleep(300)
 
     def resolve(self, request, handler):
         reply = request.reply()
@@ -56,7 +56,6 @@ class PeerResolver(BaseResolver):
             if qtype == 'A':
                 for ip in self.ipv4_peers:
                     reply.add_answer(RR(qname, QTYPE.A, rdata=A(ip), ttl=60))
-
             elif qtype == 'AAAA':
                 for ip in self.ipv6_peers:
                     reply.add_answer(RR(qname, QTYPE.AAAA, rdata=AAAA(ip), ttl=60))
