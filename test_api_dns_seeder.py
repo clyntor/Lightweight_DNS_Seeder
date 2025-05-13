@@ -6,9 +6,7 @@ from dnslib import DNSRecord
 # Test to ensure the resolver updates peers correctly
 def test_update_peers():
     # Mock the API response
-    mock_response = {
-        "peers": ["192.168.1.1", "2001:db8::ff00:42:8329"]
-    }
+    mock_response = ["192.168.1.1", "2001:db8::ff00:42:8329"]
 
     with patch('requests.get') as mock_get:
         mock_get.return_value.status_code = 200
