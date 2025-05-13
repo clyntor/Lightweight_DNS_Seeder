@@ -5,8 +5,13 @@ from dnslib import DNSRecord
 
 # Test to ensure the resolver updates peers correctly
 def test_update_peers():
-    # Mock the API response
-    mock_response = ["192.168.1.1", "2001:db8::ff00:42:8329"]
+    # Correctly formatted mock API response (dict with "result" key)
+    mock_response = {
+        "result": [
+            {"addr": "192.168.1.1"},
+            {"addr": "2001:db8::ff00:42:8329"}
+        ]
+    }
 
     with patch('requests.get') as mock_get:
         mock_get.return_value.status_code = 200
@@ -15,37 +20,39 @@ def test_update_peers():
         # Disable background thread for testing
         resolver = PeerResolver("https://api.adventurecoin.quest/peers", start_thread=False)
 
-        # Directly call update_peers()
+        # Call update_peers directly
         resolver.update_peers()
 
+        # Debug prints
         print(f"IPv4 Peers: {resolver.ipv4_peers}")
         print(f"IPv6 Peers: {resolver.ipv6_peers}")
 
-        # Assert API was called once
-        assert mock_get.call_count == 2
-        assert mock_get.return_value.json.return_value == mock_response
+        # Assert API call
+        assert mock_get.call_count == 2  # Called once in __init__, once in update_peers
 
         # Assert peers were parsed correctly
-        assert len(resolver.ipv4_peers) == 1, f"Expected 1 IPv4 peer, got {len(resolver.ipv4_peers)}"
-        assert len(resolver.ipv6_peers) == 1, f"Expected 1 IPv6 peer, got {len(resolver.ipv6_peers)}"
-        assert resolver.ipv4_peers[0] == "192.168.1.1"
-        assert resolver.ipv6_peers[0] == "2001:db8::ff00:42:8329"
+        assert resolver.ipv4_peers == ["192.168.1.1"]
+        assert resolver.ipv6_peers == ["2001:db8::ff00:42:8329"]
 
-# Test the resolve method (ensure it returns answers for A and AAAA queries)
+# Test DNS resolution (A and AAAA queries)
 def test_resolve():
-    # Disable background thread for testing
+    # Create resolver with static peer lists
     resolver = PeerResolver("https://api.adventurecoin.quest/peers", start_thread=False)
     resolver.ipv4_peers = ["192.168.1.1"]
     resolver.ipv6_peers = ["2001:db8::ff00:42:8329"]
 
+    # Create DNS queries
     request_ipv4 = DNSRecord.question("example.com", "A")
     request_ipv6 = DNSRecord.question("example.com", "AAAA")
 
+    # Resolve DNS queries
     response_ipv4 = resolver.resolve(request_ipv4, None)
     response_ipv6 = resolver.resolve(request_ipv6, None)
 
+    # Verify IPv4 resolution
     assert len(response_ipv4.rr) == 1
     assert str(response_ipv4.rr[0].rdata) == "192.168.1.1"
 
+    # Verify IPv6 resolution
     assert len(response_ipv6.rr) == 1
     assert str(response_ipv6.rr[0].rdata) == "2001:db8::ff00:42:8329"
