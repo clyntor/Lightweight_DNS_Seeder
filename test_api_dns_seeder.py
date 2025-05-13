@@ -20,6 +20,9 @@ def test_update_peers():
         # Directly call update_peers() instead of waiting for the thread
         resolver.update_peers()
 
+        # Wait a moment to ensure that the peers are updated (you can adjust the sleep time)
+        time.sleep(1)
+
         # Test if peers are updated
         assert len(resolver.ipv4_peers) == 1
         assert len(resolver.ipv6_peers) == 1
@@ -34,17 +37,18 @@ def test_resolve():
     resolver.ipv6_peers = ["2001:db8::ff00:42:8329"]
 
     # Mock request using dnslib's DNSRecord and QTYPE
-    request_ipv4 = DNSRecord.question("example.com", "A")  # Use string "A" instead of QTYPE.A
-    request_ipv6 = DNSRecord.question("example.com", "AAAA")  # Use string "AAAA" instead of QTYPE.AAAA
+    request_ipv4 = DNSRecord.question("example.com", "A")
+    request_ipv6 = DNSRecord.question("example.com", "AAAA")
 
     # Mock response
     response_ipv4 = resolver.resolve(request_ipv4, None)
     response_ipv6 = resolver.resolve(request_ipv6, None)
 
-    # Test IPv4 resolution
+    # Check if answers are returned
+    assert hasattr(response_ipv4, 'answers'), "Expected 'answers' in the response"
     assert len(response_ipv4.answers) == 1
     assert response_ipv4.answers[0].rdata == "192.168.1.1"
 
-    # Test IPv6 resolution
+    assert hasattr(response_ipv6, 'answers'), "Expected 'answers' in the response"
     assert len(response_ipv6.answers) == 1
     assert response_ipv6.answers[0].rdata == "2001:db8::ff00:42:8329"
