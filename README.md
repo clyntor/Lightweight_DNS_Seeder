@@ -26,9 +26,18 @@ curl -sL https://raw.githubusercontent.com/CryptoDevelopmentServices/Lightweight
 > - Installs dependencies
 > - Copies `api_dns_seeder.py`
 > - Sets up a systemd service
-> - Opens port 53 (TCP & UDP)
+> - Opens port 8053 (TCP & UDP)
 > - Starts the DNS Seeder
 
+---
+
+## 🚀 One-Line Auto Updater & Backup
+
+Run this to update and backup everything via `update_dns_seeder.sh`:
+
+```bash
+curl -sL https://raw.githubusercontent.com/CryptoDevelopmentServices/Lightweight_DNS_Seeder/main/update_dns_seeder.sh | sudo bash
+```
 ---
 
 ## 🛠️ Manual Setup (Optional)
@@ -41,16 +50,14 @@ cd Lightweight_DNS_Seeder
 sudo python3 api_dns_seeder.py
 ```
 
-> Binding to port 53 requires root privileges.
-
 ---
 
 ## 🔥 Firewall Rules
 
-Open DNS port 53 for both protocols:
+Open DNS port 8053 for both protocols:
 
 ```bash
-sudo ufw allow 53
+sudo ufw allow 8053
 ```
 
 Also ensure your hosting provider/firewall allows it.
@@ -94,6 +101,9 @@ vSeeds.emplace_back("seed.adventurecoin.quest");
 
 ### 2. Seeder Running via systemd
 ![Seeder Running](screenshots/ss2.jpg)
+
+### 2. Seeder updated, backed up and Running via systemd
+![Seeder Running](screenshots/ss3.jpg)
 
 ---
 
