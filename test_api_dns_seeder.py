@@ -27,9 +27,13 @@ def test_update_peers():
         print(f"IPv4 Peers: {resolver.ipv4_peers}")
         print(f"IPv6 Peers: {resolver.ipv6_peers}")
 
+        # Debug: Check the mock response
+        assert mock_get.call_count == 1  # Ensure the API was called exactly once
+        assert mock_get.return_value.json.return_value == mock_response  # Check if the response matches the mock
+
         # Test if peers are updated
-        assert len(resolver.ipv4_peers) == 1
-        assert len(resolver.ipv6_peers) == 1
+        assert len(resolver.ipv4_peers) == 1, f"Expected 1 IPv4 peer, got {len(resolver.ipv4_peers)}"
+        assert len(resolver.ipv6_peers) == 1, f"Expected 1 IPv6 peer, got {len(resolver.ipv6_peers)}"
         assert resolver.ipv4_peers[0] == "192.168.1.1"
         assert resolver.ipv6_peers[0] == "2001:db8::ff00:42:8329"
 
@@ -50,7 +54,7 @@ def test_resolve():
 
     # Check for 'answers' in the response (using dnslib's rdata attribute)
     assert len(response_ipv4.rr) == 1
-    assert response_ipv4.rr[0].rdata == "192.168.1.1"
+    assert response_ipv4.rr[0].rdata == b"192.168.1.1"  # Adjusted to byte string comparison
 
     assert len(response_ipv6.rr) == 1
-    assert response_ipv6.rr[0].rdata == "2001:db8::ff00:42:8329"
+    assert response_ipv6.rr[0].rdata == b"2001:db8::ff00:42:8329"  # Adjusted to byte string comparison
