@@ -33,17 +33,20 @@ jobs:
     # Lint with flake8
     - name: Lint with flake8
       run: |
-        # Stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # Exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    # Test with pytest
-    - name: Test with pytest
+    # Optional: Skip tests if none exist
+    - name: Skip Tests (if no tests)
+      if: ${{ failure() }}
+      run: echo "No tests to run. Skipping test step."
+    
+    # Run tests
+    - name: Run tests with pytest
       run: |
-        pytest
+        pytest  # Runs all test files matching test_*.py
 
     # Run the Lightweight DNS Seeder
     - name: Run Lightweight DNS Seeder
       run: |
-        python dns_seeder.py  # Change to your actual seeder script name
+        python api_dns_seeder.py
