@@ -54,7 +54,7 @@ def test_resolve():
 
     # Check for 'answers' in the response (using dnslib's rdata attribute)
     assert len(response_ipv4.rr) == 1
-    assert response_ipv4.rr[0].rdata == b"192.168.1.1"  # Adjusted to byte string comparison
+    assert response_ipv4.rr[0].rdata == "192.168.1.1"  # Fixed to string comparison
 
     assert len(response_ipv6.rr) == 1
-    assert response_ipv6.rr[0].rdata == b"2001:db8::ff00:42:8329"  # Adjusted to byte string comparison
+    assert response_ipv6.rr[0].rdata == "2001:db8::ff00:42:8329"  # Fixed to string comparison
