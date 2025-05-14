@@ -102,8 +102,11 @@ vSeeds.emplace_back("seed.adventurecoin.quest");
 ### 2. Seeder Running via systemd
 ![Seeder Running](screenshots/ss2.jpg)
 
-### 2. Seeder updated, backed up and Running via systemd
+### 3. Seeder updated, backed up and Running via systemd
 ![Seeder Running](screenshots/ss3.jpg)
+
+### 4. Seeder logger, running on discord
+![Seeder Running](screenshots/ss4.jpg)
 
 ---
 
