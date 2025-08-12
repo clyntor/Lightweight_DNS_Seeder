@@ -2,7 +2,7 @@
 
 set -e
 
-echo "🔧 Setting up AdventureCoin Lightweight DNS Seeder..."
+echo "🔧 Setting up Aegisum Lightweight DNS Seeder..."
 
 # 1. Install dependencies
 echo "📦 Installing Python packages..."
@@ -10,9 +10,9 @@ pip install --upgrade pip
 pip install dnslib requests
 
 # 2. Seeder directory and script
-SEEDER_DIR="/opt/advc-dnsseeder"
+SEEDER_DIR="/opt/aegs-dnsseeder"
 SEEDER_SCRIPT="$SEEDER_DIR/api_dns_seeder.py"
-GITHUB_SCRIPT_URL="https://raw.githubusercontent.com/CryptoDevelopmentServices/Lightweight_DNS_Seeder/main/api_dns_seeder.py"
+GITHUB_SCRIPT_URL="https://raw.githubusercontent.com/clyntor/Lightweight_DNS_Seeder/main/api_dns_seeder.py"
 
 echo "📁 Creating seeder directory..."
 sudo mkdir -p "$SEEDER_DIR"
@@ -23,9 +23,9 @@ sudo chmod +x "$SEEDER_SCRIPT"
 
 # 3. Create systemd service
 echo "🛠️ Creating systemd service..."
-sudo tee /etc/systemd/system/advc-dnsseeder.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/aegs-dnsseeder.service > /dev/null <<EOF
 [Unit]
-Description=AdventureCoin DNS Seeder
+Description=Aegisum DNS Seeder
 After=network.target
 
 [Service]
