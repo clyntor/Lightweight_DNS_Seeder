@@ -18,7 +18,7 @@ def test_update_peers():
         mock_get.return_value.json.return_value = mock_response
 
         # Disable background thread for testing
-        resolver = PeerResolver("https://api.adventurecoin.quest/peers", start_thread=False)
+        resolver = PeerResolver("https://explorer1.aegisum.com/ext/getnetworkpeers", start_thread=False)
 
         # Call update_peers directly
         resolver.update_peers()
