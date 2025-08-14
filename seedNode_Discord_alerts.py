@@ -17,7 +17,7 @@ DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 is_up = False  # Assume down at startup to force first check alert
 retry_count = 0
 MAX_RETRIES = 3
-SEEDNODE_NAME = "AdventureCoin Seeder"  # Name of the seednode
+SEEDNODE_NAME = "Aegisum Seeder"  # Name of the seednode
 
 def send_discord_alert(embed):
     webhook = DiscordWebhook(url=DISCORD_WEBHOOK_URL)
@@ -75,7 +75,7 @@ def health_check():
 
         # Peer check: look for A records for your seeder domain
         peer_check = subprocess.run(
-            ["dig", "A", "seeder.adventurecoin.quest", "@localhost", "-p", "8053"],
+            ["dig", "A", "seed.aegisum.com", "@localhost", "-p", "8053"],
             capture_output=True,
             text=True
         )
