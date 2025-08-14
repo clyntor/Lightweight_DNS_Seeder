@@ -41,8 +41,8 @@ EOF
 # 4. Enable and start service
 sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
-sudo systemctl enable advc-dnsseeder.service
-sudo systemctl restart advc-dnsseeder.service
+sudo systemctl enable aegs-dnsseeder.service
+sudo systemctl restart aegs-dnsseeder.service
 
 # 5. Open DNS port
 echo "🌐 Opening DNS port 53..."
@@ -50,4 +50,4 @@ sudo ufw allow 53
 sudo ufw reload
 
 echo "✅ DNS Seeder is installed and running!"
-echo "🔍 Use: 'sudo systemctl status advc-dnsseeder' to check status"
+echo "🔍 Use: 'sudo systemctl status aegs-dnsseeder' to check status"
